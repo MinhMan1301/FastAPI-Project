@@ -2,7 +2,7 @@
 
 A collection of hands-on mini-projects built while learning **FastAPI**, progressing from basic data modeling to full CRUD apps with authentication and databases.
 
----
+--- all project use the same environment with  project 0
 
 ## 🌐 Overview
 

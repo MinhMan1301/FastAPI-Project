@@ -1,0 +1,56 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="sklearn" />
+          <option value="sql" />
+          <option value="altair" />
+          <option value="annotated-doc" />
+          <option value="annotated-types" />
+          <option value="anyio" />
+          <option value="blinker" />
+          <option value="charset-normalizer" />
+          <option value="click" />
+          <option value="contourpy" />
+          <option value="et_xmlfile" />
+          <option value="fastapi" />
+          <option value="fonttools" />
+          <option value="idna" />
+          <option value="joblib" />
+          <option value="kiwisolver" />
+          <option value="matplotlib" />
+          <option value="narwhals" />
+          <option value="numpy" />
+          <option value="openpyxl" />
+          <option value="pandas" />
+          <option value="plotly" />
+          <option value="protobuf" />
+          <option value="pyarrow" />
+          <option value="pydantic" />
+          <option value="pydantic_core" />
+          <option value="pyparsing" />
+          <option value="scikit-learn" />
+          <option value="scipy" />
+          <option value="starlette" />
+          <option value="streamlit" />
+          <option value="tenacity" />
+          <option value="threadpoolctl" />
+          <option value="typing-inspection" />
+          <option value="tzdata" />
+          <option value="urllib3" />
+          <option value="uvicorn" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyStubPackagesAdvertiser" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="pandas" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="UnsatisfiedRequirementInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+  </profile>
+</component>
