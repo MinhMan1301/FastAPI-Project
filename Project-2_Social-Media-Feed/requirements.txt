@@ -1,0 +1,8 @@
+fastapi-login
+fastapi
+uvicorn
+jinja2
+pydantic
+bcrypt
+passlib
+python-dotenv
