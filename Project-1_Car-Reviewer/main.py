@@ -1,10 +1,17 @@
 from urllib import response
 
-from fastapi import FastAPI, Query, Path, HTTPException, status, Body
+from fastapi import FastAPI, Query, Path, HTTPException, status, Body, Request
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict
+
+from starlette.responses import HTMLResponse
+
 from database import cars
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+
+templates = Jinja2Templates(directory="templates")
 
 class Car(BaseModel):
     make : str
@@ -19,17 +26,18 @@ class Car(BaseModel):
 
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get("/")
-def root():
-    return {"message" : "hello world"}
+@app.get(path="/", response_class=HTMLResponse)
+def root(request: Request):
+    return templates.TemplateResponse(request, name="home.html")
 
 @app.get("/cars", response_model = List[Dict[str,Car]])
 def get_cars(number : Optional[str] = Query("10", max_length = 3)):
     response = []
     for id, car in list(cars.items())[:int(number)]:
         to_add = {}
-        to_add["id"] = car
+        to_add[str(id)] = car
         response.append(to_add)
     return response
 
