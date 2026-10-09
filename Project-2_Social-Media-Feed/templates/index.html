@@ -8,10 +8,139 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+
+  <!-- ===== CSS cho header / navbar / footer (nằm ngay trong file này) ===== -->
+  <style>
+    .layout { padding-top: 112px; padding-bottom: 96px; }
+
+    /* Header */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+      background: rgba(10, 18, 22, .62);
+      border-bottom: 1px solid rgba(255, 255, 255, .22);
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+      transition: background .25s, box-shadow .25s;
+    }
+    .site-header.is-scrolled { background: rgba(10, 18, 22, .85); box-shadow: 0 12px 32px rgba(0, 0, 0, .35); }
+    .site-header__inner {
+      position: relative; max-width: 1120px; margin: 0 auto;
+      height: 64px; padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .site-brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 600; font-size: 1.05rem; letter-spacing: -.01em;
+      text-decoration: none; color: var(--text);
+    }
+    .site-brand svg { color: var(--glow); }
+
+    /* Navbar */
+    .site-nav { display: flex; align-items: center; gap: 24px; }
+    .site-nav ul { display: flex; gap: 4px; list-style: none; }
+    .site-nav ul a {
+      display: block; padding: 8px 14px; border-radius: 999px;
+      font-size: .9rem; font-weight: 500;
+      color: var(--text); text-decoration: none; opacity: .85;
+      transition: background .2s, opacity .2s;
+    }
+    .site-nav ul a:hover { opacity: 1; background: rgba(255, 255, 255, .12); }
+    .site-cta {
+      padding: 9px 18px; border-radius: 12px;
+      background: var(--glow); color: #1b1407;
+      font-size: .9rem; font-weight: 600; text-decoration: none;
+      transition: filter .2s, transform .1s;
+    }
+    .site-cta:hover { color: #1b1407; filter: brightness(1.08); }
+    .site-cta:active { transform: translateY(1px); }
+
+    /* Hamburger (chỉ hiện trên mobile) */
+    .site-toggle {
+      display: none; width: 42px; height: 42px; border-radius: 12px; cursor: pointer;
+      background: rgba(255, 255, 255, .10); border: 1px solid rgba(255, 255, 255, .20);
+      flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+    }
+    .site-toggle span { width: 18px; height: 2px; border-radius: 2px; background: var(--text); transition: transform .25s, opacity .2s; }
+    .site-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .site-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .site-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Footer */
+    .site-footer {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+      background: rgba(10, 18, 22, .72);
+      border-top: 1px solid rgba(255, 255, 255, .22);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      font-size: .84rem; color: var(--text);
+    }
+    .site-footer__inner {
+      max-width: 1120px; margin: 0 auto; padding: 16px 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px 24px; flex-wrap: wrap;
+    }
+    .site-footer p { opacity: .8; }
+    .site-footer ul { display: flex; gap: 20px; list-style: none; }
+    .site-footer a { color: var(--text); opacity: .8; text-decoration: none; }
+    .site-footer a:hover { color: var(--glow); opacity: 1; }
+
+    /* Mobile */
+    @media (max-width: 760px) {
+      .layout { padding-top: 96px; padding-bottom: 120px; }
+      .site-header__inner, .site-footer__inner { padding-left: 20px; padding-right: 20px; }
+      .site-toggle { display: flex; }
+      .site-nav {
+        position: absolute; top: 64px; left: 0; right: 0;
+        flex-direction: column; align-items: stretch; gap: 12px;
+        padding: 16px 20px 20px;
+        background: rgba(10, 18, 22, .94);
+        border-bottom: 1px solid rgba(255, 255, 255, .18);
+        visibility: hidden; opacity: 0; transform: translateY(-8px);
+        transition: opacity .2s, transform .2s, visibility 0s linear .2s;
+      }
+      .site-nav.is-open { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+      .site-nav ul { flex-direction: column; }
+      .site-nav ul a { padding: 12px 14px; border-radius: 12px; }
+      .site-cta { text-align: center; padding: 13px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .site-header, .site-nav, .site-toggle span, .site-cta { transition: none; }
+    }
+  </style>
 </head>
 <body>
   <div class="sky" aria-hidden="true"><span class="bolt"></span></div>
   <div class="field" aria-hidden="true"></div>
+
+  <!-- ===== Header + Navbar ===== -->
+  <header class="site-header" id="siteHeader">
+    <div class="site-header__inner">
+      <a class="site-brand" href="/" aria-label="Stormwatch home">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          <path d="M7 18a4 4 0 0 1-.6-7.96A5.5 5.5 0 0 1 17 8.5a3.75 3.75 0 0 1 .5 7.46"
+                fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m12.5 12-2.5 4h3l-1.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Stormwatch</span>
+      </a>
+
+      <button class="site-toggle" id="navToggle" type="button"
+              aria-expanded="false" aria-controls="siteNav" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav" aria-label="Main">
+        <ul>
+          <li><a href="#">Forecast</a></li>
+          <li><a href="#">Radar</a></li>
+          <li><a href="#">Alerts</a></li>
+          <li><a href="#">Wind</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+        <a class="site-cta" href="#">Create account</a>
+      </nav>
+    </div>
+  </header>
 
   <main class="layout">
     <section class="intro">
@@ -41,11 +170,61 @@
 
         <button type="submit" class="btn">Sign in</button>
       </form>
+      </form>
+
 
       <p class="foot">No account yet? <a href="#">Create one</a></p>
+
     </section>
   </main>
 
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p>&copy; <span id="year">2026</span> Stormwatch. Forecast data is for guidance only.</p>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
   <script src="{{ url_for('static', path='app.js') }}"></script>
+
+
+  <script>
+    (function () {
+      var header = document.getElementById("siteHeader");
+      var menuBtn = document.getElementById("navToggle");
+      var siteNav = document.getElementById("siteNav");
+
+      function setMenu(open) {
+        siteNav.classList.toggle("is-open", open);
+        menuBtn.setAttribute("aria-expanded", String(open));
+        menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      }
+
+      menuBtn.addEventListener("click", function () {
+        setMenu(menuBtn.getAttribute("aria-expanded") !== "true");
+      });
+      siteNav.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".site-header__inner")) setMenu(false);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { setMenu(false); menuBtn.focus(); }
+      });
+      window.addEventListener("resize", function () { if (window.innerWidth > 760) setMenu(false); });
+
+      function onScroll() { header.classList.toggle("is-scrolled", window.scrollY > 8); }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+    })();
+  </script>
 </body>
 </html>

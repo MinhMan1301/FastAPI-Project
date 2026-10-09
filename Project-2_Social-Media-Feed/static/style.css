@@ -1,10 +1,5 @@
-/* ==========================================================
-   DÁN ĐOẠN NÀY VÀO CUỐI FILE static/style.css
-   (Header, navbar, footer — dùng lại biến màu ở :root)
-   Header/footer là position: fixed nên không đụng bố cục cũ.
-   ========================================================== */
 
-/* Chừa chỗ cho header (trên) và footer (dưới) */
+
 .layout {
   padding-top: 112px;
   padding-bottom: 96px;
